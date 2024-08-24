@@ -1,0 +1,52 @@
+{
+    "version": "1.0.0-a.28",
+    "description": "Popular open source web browser.",
+    "homepage": "https://zen-browser.app",
+    "license": "MPL-2.0",
+    "notes": [
+        "To set profile 'Scoop' as *DEFAULT*, or profiles/settings was lost after update:",
+        "  - Run 'Zen Profile Manager', choose 'Scoop' then click 'Start Zen Browser'.",
+        "  - Visit 'about:profiles' page in Zen Browser to check *DEFAULT* profile.",
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/zen-browser/desktop/releases/download/1.0.0-a.28/zen.installer.exe#/dl.7z",
+            "hash": "9baa8a188b6781d1b565f6433d6a22452e42e505c90fd9accbe31f3c42eefa09"
+        },
+    },
+    "extract_dir": "core",
+    "post_install": [
+        "zen -CreateProfile \"Scoop $persist_dir\\profile\"",
+        "$Addition = \"$persist_dir\\addition\"",
+        "if (Test-Path $Addition) {",
+        "  info 'Copying additional items...'",
+        "  Copy-Item -Path $Addition\\* -Destination $dir -Force -Recurse -ErrorAction SilentlyContinue",
+        "}"
+    ],
+    "bin": "zen.exe",
+    "shortcuts": [
+        [
+            "zen.exe",
+            "Zen"
+        ],
+        [
+            "zen.exe",
+            "Zen Profile Manager",
+            "-P"
+        ]
+    ],
+    "persist": [
+        "distribution",
+        "profile"
+    ],
+    "checkver": {
+        "github": "https://github.com/zen-browser/desktop"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/zen-browser/desktop/releases/download/$version/zen.installer.exe#/dl.7z",
+            },
+        }
+    }
+}
